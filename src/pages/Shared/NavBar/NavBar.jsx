@@ -3,9 +3,11 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../../../providers/AuthProvider";
 import { FaShoppingCart } from "react-icons/fa";
 import useCart from "../../../hooks/useCart";
+import useAdmin from "../../../hooks/useAdmin";
 
 const NavBar = () => {
   const { user, logOut } = useContext(AuthContext);
+  const [isAdmin] = useAdmin();
   const [cart] = useCart();
 
   const handleLogOut = () => {
@@ -14,42 +16,45 @@ const NavBar = () => {
       .catch((error) => console.log(error));
   };
 
-  const navOptions = (
+  const navLinks = (
     <>
       <li>
-        <Link to="/">Home</Link>
+        <Link className="btn-xs" to="/">
+          Home
+        </Link>
       </li>
       <li>
-        <Link to="/menu">Our Menu</Link>
+        <Link className="btn-xs" to="/menu">
+          Our Menu
+        </Link>
       </li>
       <li>
-        <Link to="/order/salad">Order Food</Link>
+        <Link className="btn-xs" to="/order/salad">
+          Order Food
+        </Link>
       </li>
+      {user && isAdmin && (
+        <li>
+          <Link className="btn-xs" to="/dashboard/adminHome">
+            Dashboard
+          </Link>
+        </li>
+      )}
+      {user && !isAdmin && (
+        <li>
+          <Link className="btn-xs" to="/dashboard/userHome">
+            Dashboard
+          </Link>
+        </li>
+      )}
       <li>
-        <Link to="/secret">Secret</Link>
-      </li>
-      <li>
-        <Link to="/dashboard/cart">
-          <button className="btn">
+        <Link className="btn-xs" to="/dashboard/cart">
+          <button className="btn btn-ghost btn-xs">
             <FaShoppingCart className="mr-2"></FaShoppingCart>
             <div className="badge badge-secondary">+{cart.length}</div>
           </button>
         </Link>
       </li>
-      {user ? (
-        <>
-          {/* <span>{user?.displayName}</span> */}
-          <button onClick={handleLogOut} className="btn btn-ghost">
-            LogOut
-          </button>
-        </>
-      ) : (
-        <>
-          <li>
-            <Link to="/login">Login</Link>
-          </li>
-        </>
-      )}
     </>
   );
 
@@ -78,16 +83,36 @@ const NavBar = () => {
               tabIndex={0}
               className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
             >
-              {navOptions}
+              {navLinks}
             </ul>
           </div>
-          <a className="btn btn-ghost normal-case text-xl">Bistro Boss</a>
+          <a className="btn btn-ghost normal-case text-2xl font-extrabold">
+            Bite Hub
+          </a>
         </div>
         <div className="navbar-center hidden lg:flex">
-          <ul className="menu menu-horizontal px-1">{navOptions}</ul>
+          <ul className="menu menu-horizontal px-1">{navLinks}</ul>
         </div>
         <div className="navbar-end">
-          <a className="btn">Get started</a>
+          {user ? (
+            <>
+              <div className="flex flex-col items-end">
+                <h6 className="px-2 font-bold">{user.displayName}</h6>
+                <button
+                  onClick={handleLogOut}
+                  className="btn btn-ghost btn-xs text-red-500 font-extrabold"
+                >
+                  LogOut
+                </button>
+              </div>
+            </>
+          ) : (
+            <>
+              <Link to="/login">
+                <button className="btn btn-ghost btn-sm">Login</button>
+              </Link>
+            </>
+          )}
         </div>
       </div>
     </>
