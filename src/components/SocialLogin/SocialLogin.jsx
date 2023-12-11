@@ -24,7 +24,7 @@ const SocialLogin = () => {
 
   return (
     <div className="mb-8">
-      <div className="divider"></div>
+      <div className="divider">or</div>
       <div className=" w-full flex justify-center gap-3">
         <button onClick={handleGoogleSignIn} className="btn btn-outline rounded-full">
           <FaGoogle className="mr-2"></FaGoogle>
