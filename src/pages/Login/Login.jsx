@@ -61,7 +61,7 @@ const Login = () => {
       </Helmet>
 
       <div className="hero-content flex-col">
-        <div className="text-center">
+        <div className="text-center my-8">
           <h1 className="text-5xl font-bold">Login now!</h1>
         </div>
 
