@@ -82,7 +82,7 @@ const UpdateItem = () => {
                 {...register("category", { required: true })}
                 className="select select-bordered w-full"
               >
-                <option disabled value="default">
+                ption disabled value="default">
                   Select a category
                 </option>
                 <option value="salad">Salad</option>
@@ -106,7 +106,7 @@ const UpdateItem = () => {
                 className="input input-bordered w-full"
               />
             </div>
-          </div>
+          </div><o
           {/* recipe details */}
           <div className="form-control">
             <label className="label">
